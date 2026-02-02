@@ -1,0 +1,12 @@
+
+venv/
+
+
+__pycache__/
+*.pyc
+
+
+capture_*.png
+
+
+.DS_Store
