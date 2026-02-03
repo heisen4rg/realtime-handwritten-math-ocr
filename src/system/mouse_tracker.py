@@ -1,8 +1,10 @@
 from pynput import mouse
 from src.system.screen_capture import capture_region
+from src.ocr.engine import OCREngine
 
 start_pos = None
 end_pos = None
+ocr_engine = OCREngine()
 
 def normalize_bbox(p1, p2):
     x1, y1 = p1
@@ -29,7 +31,9 @@ def on_click(x, y, button, pressed):
         print("Normalized bbox:", bbox)
 
         img = capture_region(bbox)
-        img.show()
+
+        result = ocr_engine.run(img)
+        print("OCR output:", result)
 
         return False
 
