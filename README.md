@@ -1,20 +1,19 @@
-# Real-Time Screen OCR Pipeline (macOS)
+# Real-Time Screen OCR Pipeline
 
-A system-level macOS tool that enables real-time selection and extraction of on-screen text by capturing user-selected screen regions, preprocessing the image, and performing live OCR inference through a modular and extensible pipeline.
+A real-time screen-based OCR system that allows users to select arbitrary on-screen regions, capture the selected content, preprocess the image, and extract text using a modular OCR pipeline.
 
-This project is built with a strong focus on **OS-level input handling, clean architecture, and OCR system design**, and serves as a foundation for future math-aware and handwritten OCR capabilities.
+The project is designed with a strong emphasis on **system-level input handling, clean architecture, and extensibility**, and serves as a foundation for future math-aware and handwritten OCR capabilities.
 
 ---
 
 ## Key Features
 
-- Real-time mouse-based region selection
-- OS-level screen capture on macOS
-- Geometry normalization for robust bounding boxes
-- Image preprocessing for OCR (grayscale conversion, upscaling)
+- User-driven rectangular region selection
+- Screen capture with geometry-normalized bounding boxes
+- Robust image preprocessing (grayscale, upscaling)
 - Live OCR inference using Tesseract
-- Modular OCR engine abstraction (easy to swap models)
-- Python package-based architecture for scalability
+- Modular OCR engine abstraction
+- Clean, package-based Python architecture
 
 ---
 
@@ -35,17 +34,20 @@ Mouse Drag
 
 ```
 src/
+├── ui/
+│   └── overlay_selector.py   # Full-screen overlay & region selection
 ├── system/
-│   ├── mouse_tracker.py      # OS-level mouse input & pipeline orchestration
+│   ├── mouse_tracker.py      # Mouse-driven selection (fallback path)
 │   └── screen_capture.py     # Screen capture utilities
 ├── ocr/
-│   └── engine.py             # OCR engine abstraction & preprocessing logic
-└── main.py                   # Entry point (future UI / overlay integration)
+│   └── engine.py             # OCR engine & preprocessing logic
+└── main.py                   # Pipeline entry point
 ```
 
-- **system/** handles OS and hardware interactions (mouse events, screen capture)
+- **ui/** handles user interaction and region selection
+- **system/** provides low-level input and screen capture utilities
 - **ocr/** encapsulates all OCR-related logic behind a clean interface
-- Components are intentionally decoupled to support future model upgrades without refactoring the system layer
+- **main.py** orchestrates the end-to-end pipeline
 
 ---
 
@@ -57,7 +59,7 @@ src/
   - Image upscaling using bicubic resampling
   - Page Segmentation Mode: `--psm 6` (uniform block of text)
 
-This baseline is optimized for printed on-screen text and serves as a reliable starting point for more advanced OCR experimentation.
+This baseline is optimized for printed on-screen text and provides a stable foundation for future OCR model experimentation.
 
 ---
 
@@ -75,7 +77,7 @@ This project was started to explore whether a **real-time, system-level OCR pipe
 - Math-aware OCR (symbol constraints, equation parsing)
 - Handwritten text recognition
 - Model replacement (TrOCR, Im2LaTeX-style architectures)
-- Lightweight macOS UI overlay for seamless interaction
+- Cross-platform UI exploration (macOS / Windows / Linux)
 
 ---
 
@@ -84,13 +86,14 @@ This project was started to explore whether a **real-time, system-level OCR pipe
 - Python 3.11
 - Pillow
 - pytesseract
-- Tesseract OCR (installed via Homebrew)
+- Tesseract OCR
 - pynput (mouse input)
-- macOS Accessibility & Screen Recording APIs
+- Tkinter (UI overlay)
 
 ---
 
 ## Status
 
-✅ Baseline real-time OCR pipeline is stable and functional  
+✅ Real-time screen OCR pipeline is stable and functional  
+✅ Cross-platform UI overlay implemented using Tkinter  
 🚧 Active development toward math-aware and handwritten OCR
